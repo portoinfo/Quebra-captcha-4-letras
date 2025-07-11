@@ -82,6 +82,7 @@ def tratar_imagens(pasta_origem, pasta_temp, pasta_destino='ajeitado'):
                     imagem2.putpixel((y, x), 0)
         nome_arquivo = os.path.basename(arquivo)
         imagem2.save(f'{pasta_destino}/{nome_arquivo}')
+        print(f'Imagem {nome_arquivo} tratada e salva em {pasta_destino}/{nome_arquivo}')
 
 
 if __name__ == "__main__":
