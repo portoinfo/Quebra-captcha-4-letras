@@ -2,8 +2,8 @@ import cv2
 import os
 import glob
 
-def separar(qtde_letras = 5):
-	arquivos = glob.glob('ajeitado_teste/*')
+def separar(pasta_origem, qtde_letras = 5):
+	arquivos = glob.glob(f'{pasta_origem}/*')
 	for arquivo in arquivos:
 		print(f'Arquivo: {arquivo}')
 		imagem = cv2.imread(arquivo)
@@ -20,15 +20,14 @@ def separar(qtde_letras = 5):
 		for contorno in contornos:
 			(x, y, largura, altura) = cv2.boundingRect(contorno)
 			area = cv2.contourArea(contorno)
-			if area > 10.0:
-				print(f'Area: {area}, Largura: {largura}, Altura: {altura}')
-			if area > 11:
+			#if area >= 40.0:
+			#	print(f'Area: {area}, Largura: {largura}, Altura: {altura}')
+			if area >= 40:
 				regiao_letras.append((x, y, largura, altura))
 		print(f'Regiões encontradas: {len(regiao_letras)}')
 		if len(regiao_letras) != qtde_letras:
-			continue
+			pass#continue
 		# desenhar os contornos e separar as letras em arquivos individuais
-		print('Passou 1 . . .')
 		imagem_final = cv2.merge([imagem] * 3)
 
 		i = 0
@@ -43,5 +42,5 @@ def separar(qtde_letras = 5):
 		cv2.imwrite(f"identificado/{nome_arquivo}", imagem_final)
 
 if __name__ == "__main__":
-	separar(4)
+	separar('ajeitado', 4)
 	print("Letras separadas com sucesso!")	
